@@ -12,13 +12,21 @@ Identify what are this assumptions.
 
 ### When a dataset have multiple independent Variables and one dependent variable.  
 #### When a dataset has categorical data then, expand the dataset and use dummy variables for fillting them in one regression model.
-### What is Dummy Variable Trap ?
+### What is Dummy Variable Trap ?  
+
 
 ### p-value:  It is measure of strength of the evidance against the null hypothesis.
 
 # Building Model Methods:
+## All in method :
+    * its not a very reliable meathod,as it can cause the model to genrate baised outpu
+    * This method of createing the model is used only if :
+        - all the input columns are very much known.
+        - the source of the data is already cureated and trusted.
+        - :; if you have no freedom of filtering the dataset.
+        
 ## Backward Elimination: (Fastest one)
-    Step 1: Select the significance level  to stay in the model.
+    Step 1: Select the significance level  to stay in the model (0.05 is most comanlly used value).
     Step 2: Fit full model with all the possible predictors 
     Step 3: Consider the predictor ith the higest P-Value. If P > SL(significance level)
             Step-4: Remove the predictor 
