@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>Multi Linear Regression-checkpoint</title>
+<title>Backward_Elimination-checkpoint</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13077,7 +13077,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="The-Notebook-is-for-understaning-Multi-Linear-Regression">The Notebook is for understaning Multi Linear Regression<a class="anchor-link" href="#The-Notebook-is-for-understaning-Multi-Linear-Regression">&#182;</a></h1><h2 id="This-Data-set-is-about-50-startups-and-there-profit-and-loss-statements">This Data set is about 50 startups and there profit and loss statements<a class="anchor-link" href="#This-Data-set-is-about-50-startups-and-there-profit-and-loss-statements">&#182;</a></h2>
+<h1 id="The-Notebook-is-for-understaning-Backward-elimination-method-for-building-model">The Notebook is for understaning Backward elimination method for building model<a class="anchor-link" href="#The-Notebook-is-for-understaning-Backward-elimination-method-for-building-model">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -13468,9 +13468,214 @@ In case you used a LabelEncoder before this OneHotEncoder to convert the categor
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="From-the-above-table-we-can-see-how-our-regression-performed.-Although-its-more-visual-check-and-in-future-we-will-see-more-better-metrics-to-judge-the-performance.">From the above table we can see how our regression performed. Although its more visual check and in future we will see more better metrics to judge the performance.<a class="anchor-link" href="#From-the-above-table-we-can-see-how-our-regression-performed.-Although-its-more-visual-check-and-in-future-we-will-see-more-better-metrics-to-judge-the-performance.">&#182;</a></h3>
+<h1 id="From-the-above-exmple-it-is-very-clear-that,-&quot;multiple-independent-variales-can-be-used-in-linear-regression.&quot;-But-the-question-is-it-enough-to-train-a-model.-Can-it-be-possible-that-we-select-statisticlly-important-columns-to-make-the-prediction.">From the above exmple it is very clear that, "multiple independent variales can be used in linear regression." But the question is it enough to train a model. Can it be possible that we select statisticlly important columns to make the prediction.<a class="anchor-link" href="#From-the-above-exmple-it-is-very-clear-that,-&quot;multiple-independent-variales-can-be-used-in-linear-regression.&quot;-But-the-question-is-it-enough-to-train-a-model.-Can-it-be-possible-that-we-select-statisticlly-important-columns-to-make-the-prediction.">&#182;</a></h1>
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="err">!</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">statsmodels</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Requirement already satisfied: statsmodels in /usr/local/lib/python3.6/dist-packages (0.11.1)
+Requirement already satisfied: numpy&gt;=1.14 in /usr/local/lib/python3.6/dist-packages (from statsmodels) (1.17.0)
+Requirement already satisfied: patsy&gt;=0.5 in /usr/local/lib/python3.6/dist-packages (from statsmodels) (0.5.1)
+Requirement already satisfied: scipy&gt;=1.0 in /usr/local/lib/python3.6/dist-packages (from statsmodels) (1.3.1)
+Requirement already satisfied: pandas&gt;=0.21 in /usr/local/lib/python3.6/dist-packages (from statsmodels) (0.25.0)
+Requirement already satisfied: six in /usr/local/lib/python3.6/dist-packages (from patsy&gt;=0.5-&gt;statsmodels) (1.12.0)
+Requirement already satisfied: python-dateutil&gt;=2.6.1 in /usr/local/lib/python3.6/dist-packages (from pandas&gt;=0.21-&gt;statsmodels) (2.8.0)
+Requirement already satisfied: pytz&gt;=2017.2 in /usr/local/lib/python3.6/dist-packages (from pandas&gt;=0.21-&gt;statsmodels) (2019.2)
+<span class="ansi-yellow-fg">WARNING: You are using pip version 19.2.2, however version 20.0.2 is available.
+You should consider upgrading via the &#39;pip install --upgrade pip&#39; command.</span>
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">sm</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Multi-linear-regression-has-a-eqation-of">Multi-linear-regression has a eqation of<a class="anchor-link" href="#Multi-linear-regression-has-a-eqation-of">&#182;</a></h4><h5 id="y-=-b0-+-b1X1-+-b2X2-+-b3X3-+-......-+-bn-Xn">y = b0 + b1<em>X1 + b2</em>X2 + b3<em>X3 + ...... + bn</em> Xn<a class="anchor-link" href="#y-=-b0-+-b1X1-+-b2X2-+-b3X3-+-......-+-bn-Xn">&#182;</a></h5><h4 id="From-the-above-eqeation-we-can-see-that-constant-&quot;-b0-&quot;-do-not-have-a-coefficent-&quot;-X0-&quot;-for-this-we-can-say-that-its-equal-to-1.-Therefore-multi-linear-regreion-equation-can-re-writen-as-:">From the above eqeation we can see that constant " b0 " do not have a coefficent " X0 " for this we can say that its equal to 1. Therefore multi-linear-regreion equation can re-writen as :<a class="anchor-link" href="#From-the-above-eqeation-we-can-see-that-constant-&quot;-b0-&quot;-do-not-have-a-coefficent-&quot;-X0-&quot;-for-this-we-can-say-that-its-equal-to-1.-Therefore-multi-linear-regreion-equation-can-re-writen-as-:">&#182;</a></h4><h5 id="y-=-b0X0-+-b1X1-+-b2X2-+-b3X3-+-......-+-bn*-Xn">y = b0<em>X0 + b1</em>X1 + b2<em>X2 + b3</em>X3 + ...... + bn* Xn<a class="anchor-link" href="#y-=-b0X0-+-b1X1-+-b2X2-+-b3X3-+-......-+-bn*-Xn">&#182;</a></h5><h4 id="To-implement-this-we-have-to-add-a-column-in-dataset-that-has-a-value-one">To implement this we have to add a column in dataset that has a value one<a class="anchor-link" href="#To-implement-this-we-have-to-add-a-column-in-dataset-that-has-a-value-one">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arr</span> <span class="o">=</span>  <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">50</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span> <span class="n">values</span> <span class="o">=</span> <span class="n">X</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[20]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([[1.0000000e+00, 0.0000000e+00, 1.0000000e+00, 1.6534920e+05,
+        1.3689780e+05, 4.7178410e+05],
+       [1.0000000e+00, 0.0000000e+00, 0.0000000e+00, 1.6259770e+05,
+        1.5137759e+05, 4.4389853e+05],
+       [1.0000000e+00, 1.0000000e+00, 0.0000000e+00, 1.5344151e+05,
+        1.0114555e+05, 4.0793454e+05],
+       [1.0000000e+00, 0.0000000e+00, 1.0000000e+00, 1.4437241e+05,
+        1.1867185e+05, 3.8319962e+05],
+       [1.0000000e+00, 1.0000000e+00, 0.0000000e+00, 1.4210734e+05,
+        9.1391770e+04, 3.6616842e+05],
+       [1.0000000e+00, 0.0000000e+00, 1.0000000e+00, 1.3187690e+05,
+        9.9814710e+04, 3.6286136e+05],
+       [1.0000000e+00, 0.0000000e+00, 0.0000000e+00, 1.3461546e+05,
+        1.4719887e+05, 1.2771682e+05],
+       [1.0000000e+00, 1.0000000e+00, 0.0000000e+00, 1.3029813e+05,
+        1.4553006e+05, 3.2387668e+05],
+       [1.0000000e+00, 0.0000000e+00, 1.0000000e+00, 1.2054252e+05,
+        1.4871895e+05, 3.1161329e+05],
+       [1.0000000e+00, 0.0000000e+00, 0.0000000e+00, 1.2333488e+05,
+        1.0867917e+05, 3.0498162e+05],
+       [1.0000000e+00, 1.0000000e+00, 0.0000000e+00, 1.0191308e+05,
+        1.1059411e+05, 2.2916095e+05],
+       [1.0000000e+00, 0.0000000e+00, 0.0000000e+00, 1.0067196e+05,
+        9.1790610e+04, 2.4974455e+05],
+       [1.0000000e+00, 1.0000000e+00, 0.0000000e+00, 9.3863750e+04,
+        1.2732038e+05, 2.4983944e+05],
+       [1.0000000e+00, 0.0000000e+00, 0.0000000e+00, 9.1992390e+04,
+        1.3549507e+05, 2.5266493e+05],
+       [1.0000000e+00, 1.0000000e+00, 0.0000000e+00, 1.1994324e+05,
+        1.5654742e+05, 2.5651292e+05],
+       [1.0000000e+00, 0.0000000e+00, 1.0000000e+00, 1.1452361e+05,
+        1.2261684e+05, 2.6177623e+05],
+       [1.0000000e+00, 0.0000000e+00, 0.0000000e+00, 7.8013110e+04,
+        1.2159755e+05, 2.6434606e+05],
+       [1.0000000e+00, 0.0000000e+00, 1.0000000e+00, 9.4657160e+04,
+        1.4507758e+05, 2.8257431e+05],
+       [1.0000000e+00, 1.0000000e+00, 0.0000000e+00, 9.1749160e+04,
+        1.1417579e+05, 2.9491957e+05],
+       [1.0000000e+00, 0.0000000e+00, 1.0000000e+00, 8.6419700e+04,
+        1.5351411e+05, 0.0000000e+00],
+       [1.0000000e+00, 0.0000000e+00, 0.0000000e+00, 7.6253860e+04,
+        1.1386730e+05, 2.9866447e+05],
+       [1.0000000e+00, 0.0000000e+00, 1.0000000e+00, 7.8389470e+04,
+        1.5377343e+05, 2.9973729e+05],
+       [1.0000000e+00, 1.0000000e+00, 0.0000000e+00, 7.3994560e+04,
+        1.2278275e+05, 3.0331926e+05],
+       [1.0000000e+00, 1.0000000e+00, 0.0000000e+00, 6.7532530e+04,
+        1.0575103e+05, 3.0476873e+05],
+       [1.0000000e+00, 0.0000000e+00, 1.0000000e+00, 7.7044010e+04,
+        9.9281340e+04, 1.4057481e+05],
+       [1.0000000e+00, 0.0000000e+00, 0.0000000e+00, 6.4664710e+04,
+        1.3955316e+05, 1.3796262e+05],
+       [1.0000000e+00, 1.0000000e+00, 0.0000000e+00, 7.5328870e+04,
+        1.4413598e+05, 1.3405007e+05],
+       [1.0000000e+00, 0.0000000e+00, 1.0000000e+00, 7.2107600e+04,
+        1.2786455e+05, 3.5318381e+05],
+       [1.0000000e+00, 1.0000000e+00, 0.0000000e+00, 6.6051520e+04,
+        1.8264556e+05, 1.1814820e+05],
+       [1.0000000e+00, 0.0000000e+00, 1.0000000e+00, 6.5605480e+04,
+        1.5303206e+05, 1.0713838e+05],
+       [1.0000000e+00, 1.0000000e+00, 0.0000000e+00, 6.1994480e+04,
+        1.1564128e+05, 9.1131240e+04],
+       [1.0000000e+00, 0.0000000e+00, 1.0000000e+00, 6.1136380e+04,
+        1.5270192e+05, 8.8218230e+04],
+       [1.0000000e+00, 0.0000000e+00, 0.0000000e+00, 6.3408860e+04,
+        1.2921961e+05, 4.6085250e+04],
+       [1.0000000e+00, 1.0000000e+00, 0.0000000e+00, 5.5493950e+04,
+        1.0305749e+05, 2.1463481e+05],
+       [1.0000000e+00, 0.0000000e+00, 0.0000000e+00, 4.6426070e+04,
+        1.5769392e+05, 2.1079767e+05],
+       [1.0000000e+00, 0.0000000e+00, 1.0000000e+00, 4.6014020e+04,
+        8.5047440e+04, 2.0551764e+05],
+       [1.0000000e+00, 1.0000000e+00, 0.0000000e+00, 2.8663760e+04,
+        1.2705621e+05, 2.0112682e+05],
+       [1.0000000e+00, 0.0000000e+00, 0.0000000e+00, 4.4069950e+04,
+        5.1283140e+04, 1.9702942e+05],
+       [1.0000000e+00, 0.0000000e+00, 1.0000000e+00, 2.0229590e+04,
+        6.5947930e+04, 1.8526510e+05],
+       [1.0000000e+00, 0.0000000e+00, 0.0000000e+00, 3.8558510e+04,
+        8.2982090e+04, 1.7499930e+05],
+       [1.0000000e+00, 0.0000000e+00, 0.0000000e+00, 2.8754330e+04,
+        1.1854605e+05, 1.7279567e+05],
+       [1.0000000e+00, 1.0000000e+00, 0.0000000e+00, 2.7892920e+04,
+        8.4710770e+04, 1.6447071e+05],
+       [1.0000000e+00, 0.0000000e+00, 0.0000000e+00, 2.3640930e+04,
+        9.6189630e+04, 1.4800111e+05],
+       [1.0000000e+00, 0.0000000e+00, 1.0000000e+00, 1.5505730e+04,
+        1.2738230e+05, 3.5534170e+04],
+       [1.0000000e+00, 0.0000000e+00, 0.0000000e+00, 2.2177740e+04,
+        1.5480614e+05, 2.8334720e+04],
+       [1.0000000e+00, 0.0000000e+00, 1.0000000e+00, 1.0002300e+03,
+        1.2415304e+05, 1.9039300e+03],
+       [1.0000000e+00, 1.0000000e+00, 0.0000000e+00, 1.3154600e+03,
+        1.1581621e+05, 2.9711446e+05],
+       [1.0000000e+00, 0.0000000e+00, 0.0000000e+00, 0.0000000e+00,
+        1.3542692e+05, 0.0000000e+00],
+       [1.0000000e+00, 0.0000000e+00, 1.0000000e+00, 5.4205000e+02,
+        5.1743150e+04, 0.0000000e+00],
+       [1.0000000e+00, 0.0000000e+00, 0.0000000e+00, 0.0000000e+00,
+        1.1698380e+05, 4.5173060e+04]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
