@@ -212,7 +212,7 @@ df_optimized = df_optimized.values
 
 print(df_optimized)
 
-def create_model() :
+def build_model() :
     model = tf.keras.Sequential()
     model.add(tf.keras.layers.Dense(units=64, activation=tf.nn.relu, input_shape=(train_data.shape[1], )))
     model.add(tf.keras.layers.Dense(units=64, activation=tf.nn.relu))
@@ -225,7 +225,7 @@ def create_model() :
 
 
 # %%
-model = create_model()
+model = build_model()
 
 early_stop = tf.keras.callbacks.EarlyStopping(monitor='val_loss', 
                                               patience=20)
