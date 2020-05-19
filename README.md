@@ -6,3 +6,5 @@ And I thanks the owner of this website for making this so easily available.
 
 ## Topics covered so far:
     - Simple Linear Regression 
+    - Multi Linear Regression
+    - Polynomial Regression 
