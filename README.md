@@ -5,7 +5,9 @@ And I thanks the owner of this website for making this so easily available.
 
 
 ## Topics covered so far:
+### Regression : 
     - Simple Linear Regression 
     - Multi Linear Regression
     - Polynomial Regression 
     - Support Vector Regression (SVR)
+    - Decision Tree Regression
