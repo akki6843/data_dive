@@ -5,7 +5,7 @@ And I thanks the owner of this website for making this so easily available.
 
 
 ## Topics covered so far:
-### Regression : 
+### 1 : Regression : 
     - Simple Linear Regression 
     - Multi Linear Regression
     - Polynomial Regression 
