@@ -11,3 +11,4 @@ And I thanks the owner of this website for making this so easily available.
     - Polynomial Regression 
     - Support Vector Regression (SVR)
     - Decision Tree Regression
+    - Random Forest Regression

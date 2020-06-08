@@ -9,3 +9,4 @@ The most important feature of the regression is to identity the trend and based 
     - ~~ Support Vector Regression (SVR) ~~
     - ~~ Decision Tree Regression ~~
     
+    - ~~ Random Forest Regression ~~
