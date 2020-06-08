@@ -5,4 +5,5 @@ Regression technique varies from linear to SVR and random forest Regression.
     - ~~ Simple linear Regression ~~
     - ~~ Multiple linear Regression ~~
     - ~~ Polynomial Linear Regression ~~
+    - ~~ Support Vector Regression (SVR) ~~
     
