@@ -7,6 +7,5 @@ The most important feature of the regression is to identity the trend and based 
     - ~~ Multiple linear Regression ~~
     - ~~ Polynomial Linear Regression ~~
     - ~~ Support Vector Regression (SVR) ~~
-    - ~~ Decision Tree Regression ~~
-    
+    - ~~ Decision Tree Regression ~~ 
     - ~~ Random Forest Regression ~~
